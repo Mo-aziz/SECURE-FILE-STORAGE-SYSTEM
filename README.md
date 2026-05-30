@@ -1,5 +1,5 @@
 
-# Secure File Storage — Hybrid RSA/AES (learning demo)
+# Secure File Storage — Hybrid RSA/AES 
 
 This small command-line project shows how hybrid encryption works by combining AES for bulk data and RSA for protecting the AES session key. The implementation is explicit and educational - the building blocks (AES rounds, key schedule, MixColumns, Miller–Rabin, modular arithmetic) are implemented by hand.
 
