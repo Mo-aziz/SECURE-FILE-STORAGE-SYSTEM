@@ -23,14 +23,14 @@ def clean_path_input(value: str) -> str:
 
 
 def print_header(title: str):
-    "Print a formatted section header."
+    #Print a formatted section header.
     print("\n" + "=" * 70)
     print(f"  {title}")
     print("=" * 70)
 
 
 def print_section(title: str):
-    "Print a formatted subsection header."
+    # Print a formatted subsection header.
     print(f"\n--- {title} ---")
 
 
