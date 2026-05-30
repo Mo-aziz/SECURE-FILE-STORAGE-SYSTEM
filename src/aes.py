@@ -172,7 +172,7 @@ def aes_decrypt_block(ct: bytes, rk: list) -> bytes:
     return b''.join(bytes([s[r][c]]) for c in range(4) for r in range(4))
 
 def aes_cbc_encrypt(pt: bytes, key: bytes, iv: bytes = None) -> tuple:
-    """Encrypt with AES-128-CBC."""
+  
     if iv is None:
         iv = os.urandom(16)
     assert len(key) == 16 and len(iv) == 16
@@ -188,7 +188,7 @@ def aes_cbc_encrypt(pt: bytes, key: bytes, iv: bytes = None) -> tuple:
     return ct, iv
 
 def aes_cbc_decrypt(ct: bytes, key: bytes, iv: bytes) -> bytes:
-    """Decrypt with AES-128-CBC."""
+
     assert len(key) == 16 and len(iv) == 16 and len(ct) % 16 == 0
     rk = key_expansion(key)
     pt = b''
