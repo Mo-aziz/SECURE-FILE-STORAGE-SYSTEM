@@ -13,12 +13,12 @@ from src import encoding
 
 
 def clean_input_value(value: str) -> str:
-    "Trim whitespace and optional wrapping quotes from CLI input."
+    #Trim whitespace and optional wrapping quotes from CLI input.
     return value.strip().strip('"').strip("'")
 
 
 def clean_path_input(value: str) -> str:
-    "Normalize CLI path input to an absolute path."
+    #Normalize CLI path input to an absolute path.
     return os.path.abspath(os.path.expanduser(clean_input_value(value)))
 
 
@@ -35,7 +35,7 @@ def print_section(title: str):
 
 
 def menu_main():
-    "Main menu."
+    #Main menu.
     while True:
         print_header("SECURE FILE STORAGE SYSTEM")
         print("""
@@ -60,7 +60,7 @@ def menu_main():
 
 
 def menu_users():
-    "User management menu."
+    # User management menu.
     while True:
         print_header("USER MANAGEMENT")
         print("""
@@ -84,7 +84,7 @@ def menu_users():
 
 
 def menu_files():
-    "File operations menu."
+    # File operations menu.
     while True:
         print_header("FILE OPERATIONS")
         print("""
@@ -111,7 +111,7 @@ def menu_files():
 
 
 def menu_info():
-    "System information menu."
+    # System information menu.
     print_header("SYSTEM INFORMATION")
     print("""
 SECURE FILE STORAGE SYSTEM - Hybrid RSA/AES Cryptography
@@ -161,7 +161,7 @@ TECHNOLOGY:
 
 
 def register_user():
-    "Register a new user and generate keypair."
+    # Register a new user and generate keypair.
     print_section("Register New User")
     
     username = input("Enter username: ").strip()
@@ -189,7 +189,7 @@ def register_user():
 
 
 def list_users():
-    "List all registered users."
+    #List all registered users.
     print_section("Registered Users")
     
     users = storage.list_users()
@@ -208,7 +208,7 @@ def list_users():
 
 
 def view_public_key():
-    "Display a user's public key."
+    # Display a user's public key.
     print_section("View Public Key")
     
     username = input("Enter username: ").strip()
@@ -230,7 +230,7 @@ def view_public_key():
 
 
 def encrypt_file_ui():
-    "Encrypt a file using hybrid RSA+AES."
+    # Encrypt a file using hybrid RSA+AES.
     print_section("Encrypt a File")
     
     # Get sender
@@ -368,7 +368,7 @@ def decrypt_file_ui():
 
 
 def list_files_ui():
-    "List encrypted files for a user."
+    #List encrypted files for a user.
     print_section("My Files")
     
     username = input("Enter username: ").strip()
@@ -395,7 +395,7 @@ def list_files_ui():
 
 
 def view_file_details_ui():
-    "Display details about an encrypted file."
+    #Display details about an encrypted file.
     print_section("File Details")
     
     username = clean_input_value(input("Username: "))
@@ -426,7 +426,7 @@ def view_file_details_ui():
 
 
 def main():
-    "Main entry point."
+    # Main entry point.
     try:
         menu_main()
     except KeyboardInterrupt:
