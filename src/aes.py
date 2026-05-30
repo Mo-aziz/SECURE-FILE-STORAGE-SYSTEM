@@ -1,9 +1,3 @@
-﻿"""
-AES-128 Encryption/Decryption Module - Reference Implementation
-
-Complete AES-128 with all transforms verified against NIST FIPS 197.
-S-boxes, MixColumns matrices, and all operations are standard.
-"""
 
 import os
 
@@ -50,7 +44,7 @@ SBOX_INV = [
 RCON = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36]
 
 def gmul(a, b):
-    """Galois field multiplication (GF(256))."""
+    
     p = 0
     for _ in range(8):
         if b & 1:
@@ -64,16 +58,16 @@ def gmul(a, b):
     return p
 
 def pad_pkcs7(data: bytes, block_size: int = 16) -> bytes:
-    """PKCS#7 padding."""
+  
     n = block_size - (len(data) % block_size)
     return data + bytes([n] * n)
 
 def unpad_pkcs7(data: bytes) -> bytes:
-    """Remove PKCS#7 padding."""
+  
     return data[:-data[-1]]
 
 def key_expansion(key: bytes) -> list:
-    """AES key schedule for 128-bit key."""
+   
     assert len(key) == 16
     w = []
     for i in range(4):
@@ -94,13 +88,13 @@ def key_expansion(key: bytes) -> list:
     return [list(k) for k in rk]
 
 def aes_encrypt_block(pt: bytes, rk: list) -> bytes:
-    """Encrypt one 128-bit block."""
+   
     assert len(pt) == 16
     s = [[pt[r + 4*c] for c in range(4)] for r in range(4)]
     # Initial AddRoundKey (key whitening)
     for i in range(4):
         for j in range(4):
-            s[i][j] ^= rk[0][i + 4*j]  # Column-major indexing
+            s[i][j] ^= rk[0][i + 4*j]  # Column=major indexing
     # 9 main rounds
     for round_num in range(1, 10):
         # SubBytes
@@ -132,7 +126,7 @@ def aes_encrypt_block(pt: bytes, rk: list) -> bytes:
     # Final AddRoundKey
     for i in range(4):
         for j in range(4):
-            s[i][j] ^= rk[10][i + 4*j]  # Column-major indexing
+            s[i][j] ^= rk[10][i + 4*j]  # Column major indexing
     return b''.join(bytes([s[r][c]]) for c in range(4) for r in range(4))
 
 def aes_decrypt_block(ct: bytes, rk: list) -> bytes:
@@ -142,7 +136,7 @@ def aes_decrypt_block(ct: bytes, rk: list) -> bytes:
     # Initial AddRoundKey with last round key
     for i in range(4):
         for j in range(4):
-            s[i][j] ^= rk[10][i + 4*j]  # Column-major indexing
+            s[i][j] ^= rk[10][i + 4*j]  # Column major indexing
     # 9 inverse rounds (in reverse order)
     for round_num in range(9, 0, -1):
         # InvShiftRows (inverse of ShiftRows - rotate right instead of left)
@@ -156,7 +150,7 @@ def aes_decrypt_block(ct: bytes, rk: list) -> bytes:
         # AddRoundKey
         for i in range(4):
             for j in range(4):
-                s[i][j] ^= rk[round_num][i + 4*j]  # Column-major indexing
+                s[i][j] ^= rk[round_num][i + 4*j]  # Column major indexing
         # InvMixColumns
         for c in range(4):
             col = [s[r][c] for r in range(4)]
