@@ -1,20 +1,3 @@
-"""
-Storage Module - User and Encrypted File Management
-
-This module handles:
-- User account creation and key management
-- Encrypted file storage and retrieval
-- Key pair persistence
-
-Directory Structure:
-data/
-├── users/
-│   └── <username>/
-│       ├── public_key.pem       # RSA public key
-│       ├── private_key.pem      # RSA private key
-│       └── files/
-│           └── <filename>.json  # Encrypted file manifest
-"""
 
 import os
 import json
@@ -29,17 +12,17 @@ USERS_DIR = os.path.join(DATA_DIR, 'users')
 
 
 def ensure_directories():
-    """Create necessary directories if they don't exist."""
+   
     os.makedirs(USERS_DIR, exist_ok=True)
 
 
 def get_user_dir(username: str) -> str:
-    """Get the directory path for a user."""
+   
     return os.path.join(USERS_DIR, username)
 
 
 def get_user_keys_dir(username: str) -> str:
-    """Get the directory for a user's keys."""
+ 
     user_dir = get_user_dir(username)
     keys_dir = os.path.join(user_dir, 'keys')
     os.makedirs(keys_dir, exist_ok=True)
@@ -47,7 +30,7 @@ def get_user_keys_dir(username: str) -> str:
 
 
 def get_user_files_dir(username: str) -> str:
-    """Get the directory for a user's encrypted files."""
+   
     user_dir = get_user_dir(username)
     files_dir = os.path.join(user_dir, 'files')
     os.makedirs(files_dir, exist_ok=True)
@@ -55,24 +38,12 @@ def get_user_files_dir(username: str) -> str:
 
 
 def user_exists(username: str) -> bool:
-    """Check if a user account exists."""
+   
     return os.path.isdir(get_user_dir(username))
 
 
 def create_user(username: str, key_bits: int = 512) -> Tuple[Tuple[int, int], Tuple[int, int]]:
-    """
-    Create a new user with RSA keypair.
-    
-    Args:
-        username: Username
-        key_bits: RSA key size in bits (default 512 for demo)
-        
-    Returns:
-        (public_key, private_key) tuples
-        
-    Raises:
-        ValueError: If user already exists
-    """
+   
     if user_exists(username):
         raise ValueError(f"User {username} already exists")
     
@@ -113,15 +84,7 @@ def create_user(username: str, key_bits: int = 512) -> Tuple[Tuple[int, int], Tu
 
 
 def get_public_key(username: str) -> Optional[Tuple[int, int]]:
-    """
-    Retrieve a user's public key.
-    
-    Args:
-        username: Username
-        
-    Returns:
-        (e, n) tuple or None if not found
-    """
+  
     keys_dir = get_user_keys_dir(username)
     public_key_file = os.path.join(keys_dir, 'public_key.json')
     
@@ -135,15 +98,7 @@ def get_public_key(username: str) -> Optional[Tuple[int, int]]:
 
 
 def get_private_key(username: str) -> Optional[Tuple[int, int]]:
-    """
-    Retrieve a user's private key.
-    
-    Args:
-        username: Username
-        
-    Returns:
-        (d, n) tuple or None if not found
-    """
+  
     keys_dir = get_user_keys_dir(username)
     private_key_file = os.path.join(keys_dir, 'private_key.json')
     
@@ -161,17 +116,7 @@ def save_encrypted_file(
     filename: str,
     manifest: Dict
 ) -> str:
-    """
-    Save an encrypted file manifest to user's storage.
-    
-    Args:
-        username: Username (recipient)
-        filename: Storage filename (without extension)
-        manifest: Encrypted file manifest dictionary
-        
-    Returns:
-        Path where file was saved
-    """
+
     files_dir = get_user_files_dir(username)
     filepath = os.path.join(files_dir, f"{filename}.json")
     
@@ -182,16 +127,7 @@ def save_encrypted_file(
 
 
 def load_encrypted_file(username: str, filename: str) -> Optional[Dict]:
-    """
-    Load an encrypted file manifest from user's storage.
-    
-    Args:
-        username: Username
-        filename: Storage filename (without extension)
-        
-    Returns:
-        Manifest dictionary or None if not found
-    """
+ 
     files_dir = get_user_files_dir(username)
     filepath = os.path.join(files_dir, f"{filename}.json")
     
@@ -203,15 +139,7 @@ def load_encrypted_file(username: str, filename: str) -> Optional[Dict]:
 
 
 def list_user_files(username: str) -> list:
-    """
-    List all encrypted files for a user.
-    
-    Args:
-        username: Username
-        
-    Returns:
-        List of filenames (without extension)
-    """
+ 
     files_dir = get_user_files_dir(username)
     
     if not os.path.exists(files_dir):
@@ -226,12 +154,7 @@ def list_user_files(username: str) -> list:
 
 
 def list_users() -> list:
-    """
-    List all registered users.
-    
-    Returns:
-        List of usernames
-    """
+  
     if not os.path.exists(USERS_DIR):
         return []
     
@@ -244,16 +167,7 @@ def list_users() -> list:
 
 
 def delete_encrypted_file(username: str, filename: str) -> bool:
-    """
-    Delete an encrypted file from user's storage.
-    
-    Args:
-        username: Username
-        filename: Storage filename (without extension)
-        
-    Returns:
-        True if deleted, False if not found
-    """
+ 
     files_dir = get_user_files_dir(username)
     filepath = os.path.join(files_dir, f"{filename}.json")
     
