@@ -22,7 +22,7 @@ If you want a quick syntax check, you can run:
 
 ```bash
 cd src
-python -m py_compile *.py
+python -m compileall .
 ```
 
 ## Run instructions
